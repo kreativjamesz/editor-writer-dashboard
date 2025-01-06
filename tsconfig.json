@@ -38,6 +38,6 @@
         "resources/js/**/*.d.ts",
         "resources/js/**/*.vue",
         "resources/js/app.ts",
-        "./typed-router.d.ts"
+        "resources/js/types/typed-router.d.ts"
     ]
 }
