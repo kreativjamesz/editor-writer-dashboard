@@ -1,26 +1,24 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { routes } from 'vue-router/auto-routes';
+import { useAuthStore } from '@/stores/auth';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 });
 
-// Log all routes
-router.getRoutes().forEach((route) => {
-  console.log(`Path: ${String(route.path)}, Name: ${String(route.name)}`);
-});
-
 // Navigation Guard
-router.beforeEach(async (to, from, next) => {
-  const isAuthenticated = localStorage.getItem('token');
+router.beforeEach(async (to) => {
+  const authStore = useAuthStore();
+  const publicPages = ['/login'];
+  const authRequired = !publicPages.includes(to.path);
 
-  if (to.meta.requiresAuth && !isAuthenticated) {
-    next({ name: '/login' });
-  } else if (to.meta.guest && isAuthenticated) {
-    next({ name: '/dashboard/' });
-  } else {
-    next();
+  if (authRequired && !authStore.isAuthenticated) {
+    return '/login';
+  }
+
+  if (to.path === '/login' && authStore.isAuthenticated) {
+    return authStore.user?.type === 'Writer' ? '/dashboard/writer' : '/dashboard/editor';
   }
 });
 

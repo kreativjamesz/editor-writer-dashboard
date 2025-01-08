@@ -1,10 +1,10 @@
-import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 import AutoImport from 'unplugin-auto-import/vite';
 import VueRouter from 'unplugin-vue-router/vite';
 import Components from 'unplugin-vue-components/vite';
+import path from 'path';
 
 import { VueRouterAutoImports } from 'unplugin-vue-router';
 
@@ -44,7 +44,8 @@ export default defineConfig({
   resolve: {
     alias: {
       vue: 'vue/dist/vue.esm-bundler.js',
-      '@': fileURLToPath(new URL('/resources/js', import.meta.url)),
+      // '@': fileURLToPath(new URL('/resources/js', import.meta.url)),
+      '@': path.resolve(__dirname, 'resources/js'),
     },
   },
 });
