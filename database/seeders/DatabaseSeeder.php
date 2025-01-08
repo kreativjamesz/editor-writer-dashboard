@@ -3,21 +3,60 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
-    {
-        // User::factory(10)->create();
+	public function run(): void
+	{
+		// Create Editor User
+		User::create([
+			'firstname' => 'John',
+			'lastname' => 'Editor',
+			'email' => 'editor@example.com',
+			'password' => Hash::make('password'),
+			'type' => 'Editor',
+			'status' => 'Active',
+		]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
-    }
+		// Create Writer User
+		User::create([
+			'firstname' => 'Jane',
+			'lastname' => 'Writer',
+			'email' => 'writer@example.com',
+			'password' => Hash::make('password'),
+			'type' => 'Writer',
+			'status' => 'Active',
+		]);
+
+		// Create some additional test users
+		User::create([
+			'firstname' => 'Alice',
+			'lastname' => 'Editor',
+			'email' => 'alice@example.com',
+			'password' => Hash::make('password'),
+			'type' => 'Editor',
+			'status' => 'Active',
+		]);
+
+		User::create([
+			'firstname' => 'Bob',
+			'lastname' => 'Writer',
+			'email' => 'bob@example.com',
+			'password' => Hash::make('password'),
+			'type' => 'Writer',
+			'status' => 'Active',
+		]);
+
+		// Create an inactive user for testing
+		User::create([
+			'firstname' => 'Inactive',
+			'lastname' => 'User',
+			'email' => 'inactive@example.com',
+			'password' => Hash::make('password'),
+			'type' => 'Writer',
+			'status' => 'Inactive',
+		]);
+	}
 }

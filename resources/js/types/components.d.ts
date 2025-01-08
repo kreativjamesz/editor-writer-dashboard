@@ -24,6 +24,7 @@ declare module 'vue' {
     CardTitle: typeof import('./../components/ui/card/CardTitle.vue')['default']
     DefaultLayout: typeof import('./../layouts/default-layout.vue')['default']
     DefaultNavbar: typeof import('./../components/Default/DefaultNavbar.vue')['default']
+    Input: typeof import('./../components/ui/input/Input.vue')['default']
     LoginForm: typeof import('./../components/Auth/LoginForm.vue')['default']
     Logo: typeof import('./../components/Logo.vue')['default']
     MainNav: typeof import('./../components/Default/MainNav.vue')['default']
