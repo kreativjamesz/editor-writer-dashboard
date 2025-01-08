@@ -6,12 +6,19 @@ const router = createRouter({
   routes,
 });
 
-// Navigation Guards
-router.beforeEach((to, from, next) => {
+// Log all routes
+router.getRoutes().forEach((route) => {
+  console.log(`Path: ${String(route.path)}, Name: ${String(route.name)}`);
+});
+
+// Navigation Guard
+router.beforeEach(async (to, from, next) => {
   const isAuthenticated = localStorage.getItem('token');
-  if (!isAuthenticated) {
-    console.log('You are not authenticated');
-    next();
+
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    next({ name: '/login' });
+  } else if (to.meta.guest && isAuthenticated) {
+    next({ name: '/dashboard/' });
   } else {
     next();
   }

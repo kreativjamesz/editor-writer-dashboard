@@ -1,29 +1,27 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\ArticleController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CompanyController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-	return $request->user();
-})->middleware('auth:sanctum');
+Route::post('/login', [AuthController::class, 'login']);
 
-Route::get('/', function () {
-	$sampleObject = [
-		[
-			'path' => '/',
-			'name' => 'Home',
-			'component' => 'HomeComponent'
-		],
-		[
-			'path' => '/about',
-			'name' => 'About',
-			'component' => 'AboutComponent'
-		],
-		[
-			'path' => '/contact',
-			'name' => 'Contact',
-			'component' => 'ContactComponent'
-		]
-	];
-	return $sampleObject;
+Route::middleware('auth:sanctum')->group(function () {
+	Route::post('/logout', [AuthController::class, 'logout']);
+	Route::get('/user', [AuthController::class, 'user']);
+
+	// Articles
+	Route::apiResource('articles', ArticleController::class);
+
+	// Companies (Editor only)
+	Route::middleware('can:manage-companies')->group(function () {
+		Route::apiResource('companies', CompanyController::class);
+	});
+
+	// Users (Editor only)
+	Route::middleware('can:manage-users')->group(function () {
+		Route::apiResource('users', UserController::class);
+	});
 });

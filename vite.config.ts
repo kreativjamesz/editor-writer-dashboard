@@ -5,6 +5,7 @@ import vue from '@vitejs/plugin-vue';
 import AutoImport from 'unplugin-auto-import/vite';
 import VueRouter from 'unplugin-vue-router/vite';
 import Components from 'unplugin-vue-components/vite';
+
 import { VueRouterAutoImports } from 'unplugin-vue-router';
 
 export default defineConfig({
@@ -19,7 +20,7 @@ export default defineConfig({
     AutoImport({
       imports: ['vue', 'vue-router', '@vueuse/core', VueRouterAutoImports],
       dts: 'resources/js/types/auto-imports.d.ts',
-      dirs: ['resources/js/composables', 'resources/js/stores'],
+      dirs: ['resources/js/composables/**', 'resources/js/stores/**'],
       vueTemplate: true,
     }),
     // https://github.com/antfu/unplugin-vue-components
@@ -29,7 +30,7 @@ export default defineConfig({
       // allow auto import and register components used in markdown
       include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
       dts: 'resources/js/types/components.d.ts',
-      dirs: ['resources/js/components/**'],
+      dirs: ['resources/js/components/**', 'resources/js/layouts'],
     }),
     vue({
       // This is important - should be after VueRouter plugin

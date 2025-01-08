@@ -1,12 +1,8 @@
-<script setup lang="ts">
-definePage({
-  meta: {
-    layout: 'cms',
-  },
-});
-</script>
+<script setup lang="ts"></script>
 <template>
-  <div>
-    <h1 class="text-3xl font-bold">Home Page</h1>
-  </div>
+  <DefaultLayout>
+    <div class="flex justify-center items-center min-h-screen">
+      <h1 class="text-3xl font-bold">Home Page</h1>
+    </div>
+  </DefaultLayout>
 </template>
