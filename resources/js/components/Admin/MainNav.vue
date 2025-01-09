@@ -1,11 +1,11 @@
 <template>
-  <nav class="flex items-center space-x-4 ml-8">
+  <nav class="flex items-center space-x-4">
     <router-link
       v-for="item in navItems"
       :key="item.to"
       v-show="item.show"
       :to="item.to"
-      class="text-gray-700 hover:text-blue-600 font-medium"
+      class="text-gray-700 dark:text-gray-300 hover:text-teal-600 font-medium"
     >
       {{ item.label }}
     </router-link>
@@ -13,30 +13,35 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '@/stores/auth';
+import { useRoleAccess } from '@/composables/useRoleAccess';
 
-const auth = useAuthStore();
+const { isWriter, isEditor } = useRoleAccess();
 
 const navItems = [
   {
     label: 'Dashboard',
-    to: `${auth.user.type === 'Writer' ? '/dashboard/writer' : '/dashboard/editor'}`,
+    to: '/cms/dashboard',
     show: true,
   },
   {
     label: 'Articles',
-    to: '/articles',
-    show: auth.isWriter,
+    to: '/cms/articles',
+    show: true,
   },
   {
     label: 'Companies',
-    to: '/dashboard/companies',
-    show: auth.isEditor,
+    to: '/cms/companies',
+    show: isEditor,
   },
   {
     label: 'Users',
-    to: '/dashboard/users',
-    show: auth.isEditor,
+    to: '/cms/users',
+    show: isEditor,
+  },
+  {
+    label: 'Media',
+    to: '/cms/media',
+    show: true,
   },
 ] as const;
 </script>

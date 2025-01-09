@@ -1,5 +1,7 @@
 <template>
-  <h1>Dashboard Page</h1>
+  <div>
+    <h1>Edit Article Page</h1>
+  </div>
 </template>
 
 <script setup lang="ts"></script>

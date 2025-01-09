@@ -4,9 +4,13 @@ interface FetchOptions extends RequestInit {
   auth?: boolean;
 }
 
+const APP_API_URL = import.meta.env.VITE_APP_API_URL;
+console.log('APP_API_URL', APP_API_URL);
+
 export function useApi() {
   const authStore = useAuthStore();
-  const baseURL = '/api';
+  const baseURL = `${APP_API_URL}/api`;
+  console.log('baseURL', baseURL);
 
   const fetchWithConfig = async (endpoint: string, options: FetchOptions = {}) => {
     const { auth = true, headers = {}, ...rest } = options;

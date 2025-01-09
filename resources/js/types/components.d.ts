@@ -8,10 +8,12 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AdminLayout: typeof import('./../layouts/AdminLayout.vue')['default']
+    AdminNavbar: typeof import('./../components/Admin/AdminNavbar.vue')['default']
     Alert: typeof import('./../components/ui/alert/Alert.vue')['default']
     AlertDescription: typeof import('./../components/ui/alert/AlertDescription.vue')['default']
     AlertTitle: typeof import('./../components/ui/alert/AlertTitle.vue')['default']
     App: typeof import('./../components/App.vue')['default']
+    ArticleActions: typeof import('./../components/Articles/ArticleActions.vue')['default']
     ArticleCard: typeof import('./../components/ArticleCard.vue')['default']
     AuthLayout: typeof import('./../layouts/AuthLayout.vue')['default']
     AuthNavbar: typeof import('./../components/Auth/AuthNavbar.vue')['default']
@@ -27,10 +29,19 @@ declare module 'vue' {
     Input: typeof import('./../components/ui/input/Input.vue')['default']
     LoginForm: typeof import('./../components/Auth/LoginForm.vue')['default']
     Logo: typeof import('./../components/Logo.vue')['default']
-    MainNav: typeof import('./../components/Default/MainNav.vue')['default']
+    MainNav: typeof import('./../components/Admin/MainNav.vue')['default']
     Navbar: typeof import('./../components/Navbar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Table: typeof import('./../components/ui/table/Table.vue')['default']
+    TableBody: typeof import('./../components/ui/table/TableBody.vue')['default']
+    TableCaption: typeof import('./../components/ui/table/TableCaption.vue')['default']
+    TableCell: typeof import('./../components/ui/table/TableCell.vue')['default']
+    TableEmpty: typeof import('./../components/ui/table/TableEmpty.vue')['default']
+    TableFooter: typeof import('./../components/ui/table/TableFooter.vue')['default']
+    TableHead: typeof import('./../components/ui/table/TableHead.vue')['default']
+    TableHeader: typeof import('./../components/ui/table/TableHeader.vue')['default']
+    TableRow: typeof import('./../components/ui/table/TableRow.vue')['default']
     ThemeToggle: typeof import('./../components/ThemeToggle.vue')['default']
   }
 }

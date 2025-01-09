@@ -16,14 +16,11 @@ export function useAuth() {
 
     try {
       const response = await api.post('/login', { email, password }, { auth: false });
+      console.log('Composable Login');
       authStore.setAuth(response.user, response.token);
 
-      // Redirect based on user type
-      if (response.user.type === 'Writer') {
-        router.push('/dashboard/writer');
-      } else {
-        router.push('/dashboard/editor');
-      }
+      // Redirect to CMS dashboard
+      router.push('/cms/dashboard');
 
       return true;
     } catch (e) {
@@ -35,6 +32,7 @@ export function useAuth() {
   };
 
   const logout = async () => {
+    console.log('useAuth Logout');
     loading.value = true;
     error.value = null;
 

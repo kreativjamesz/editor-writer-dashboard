@@ -58,5 +58,10 @@ class DatabaseSeeder extends Seeder
 			'type' => 'Writer',
 			'status' => 'Inactive',
 		]);
+
+		$this->call([
+			CompanySeeder::class,
+			ArticleSeeder::class
+		]);
 	}
 }

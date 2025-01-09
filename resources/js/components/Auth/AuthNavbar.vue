@@ -1,5 +1,5 @@
 <template>
-  <nav class="w-full bg-white dark:bg-slate-900 border-gray-200 px-2 sm:px-4 py-2.5">
+  <nav class="w-full bg-white dark:bg-zinc-900 border-gray-200 px-2 sm:px-4 py-2.5">
     <div class="container mx-auto flex flex-wrap items-center justify-between">
       <router-link to="/"> <Logo class="header-logo" /></router-link>
       <button

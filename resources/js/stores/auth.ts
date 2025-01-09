@@ -19,51 +19,8 @@ export const useAuthStore = defineStore('auth', {
   },
 
   actions: {
-    async login(email: string, password: string) {
-      try {
-        const response = await fetch('/api/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email, password }),
-        });
-
-        if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.message || 'Login failed');
-        }
-
-        const data = await response.json();
-        this.setAuth(data.user, data.token);
-
-        return true;
-      } catch (error) {
-        console.error('Login error:', error);
-        this.clearAuth();
-        throw error;
-      }
-    },
-
-    async logout() {
-      try {
-        if (this.token) {
-          await fetch('/api/logout', {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${this.token}`,
-            },
-          }).then(() => {
-            this.clearAuth();
-          });
-        }
-      } catch (error) {
-        console.error('Logout error:', error);
-      } finally {
-        this.clearAuth();
-      }
-    },
-
+    // Removed Login
+    // Removed Logout
     async fetchUser() {
       try {
         if (!this.token) {

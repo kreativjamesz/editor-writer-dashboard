@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth';
 import { useHandleLogout } from '@/composables/useHandleLogout';
-import MainNav from '@/components/Default/MainNav.vue';
+import MainNav from '@/components/Admin/MainNav.vue';
 
 const auth = useAuthStore();
 const { handleLogout, isLoggingOut } = useHandleLogout();
@@ -44,8 +44,6 @@ const { handleLogout, isLoggingOut } = useHandleLogout();
             >
               Editor Dashboard
             </router-link>
-
-            <router-link to="/media" class="text-gray-700 hover:text-blue-600 font-medium"> All Media </router-link>
 
             <!-- User Menu -->
             <div class="relative">

@@ -1,6 +1,6 @@
 <template>
   <div class="login-form">
-    <Card class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <Card class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <CardHeader class="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 class="text-center text-2xl/9 font-bold tracking-tight text-gray-900 dark:text-white">
           Sign in to your account
@@ -18,7 +18,7 @@
           </Alert>
 
           <div>
-            <label for="email" class="block text-sm/6 font-medium text-gray-900 dark:text-slate-200"
+            <label for="email" class="block text-sm/6 font-medium text-gray-900 dark:text-zinc-200"
               >Email address</label
             >
             <div class="mt-2">
@@ -36,7 +36,7 @@
 
           <div>
             <div class="flex items-center justify-between">
-              <label for="password" class="block text-sm/6 font-medium text-gray-900 dark:text-slate-200"
+              <label for="password" class="block text-sm/6 font-medium text-gray-900 dark:text-zinc-200"
                 >Password</label
               >
             </div>
