@@ -1,6 +1,6 @@
 <template>
   <div class="p-6">
-    <h1 class="text-6xl font-bold mb-4">{{ userRole }}'s Article Dashboard</h1>
+    <h1 class="text-6xl font-bold mb-4">{{ userRole }}'s Articles</h1>
     <Separator label="✍️" class="mb-8 bg-teal-500" />
     <section class="mb-8">
       <h2 class="text-3xl font-extrabold mb-2">Articles For Edit</h2>
