@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h1>Dashboard Companies Page</h1>
-  </div>
+  <h1>Dashboard Companies Page</h1>
 </template>
 
 <script setup lang="ts"></script>

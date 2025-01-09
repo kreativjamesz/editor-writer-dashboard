@@ -13,7 +13,7 @@ const canEdit = (article: Article) => {
 </script>
 
 <template>
-  <DefaultLayout>
+  <AdminLayout>
     <div class="container mx-auto p-4">
       <h1 class="text-2xl font-bold mb-6">All Media</h1>
 
@@ -58,5 +58,5 @@ const canEdit = (article: Article) => {
         </table>
       </div>
     </div>
-  </DefaultLayout>
+  </AdminLayout>
 </template>

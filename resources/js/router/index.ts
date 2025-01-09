@@ -13,6 +13,16 @@ router.beforeEach(async (to) => {
   const publicPages = ['/login'];
   const authRequired = !publicPages.includes(to.path);
 
+  // Check authentication status
+  if (authStore.token && !authStore.user) {
+    try {
+      await authStore.fetchUser();
+    } catch {
+      authStore.clearAuth();
+      return '/login';
+    }
+  }
+
   if (authRequired && !authStore.isAuthenticated) {
     return '/login';
   }

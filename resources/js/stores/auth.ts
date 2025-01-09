@@ -9,7 +9,7 @@ interface AuthState {
 export const useAuthStore = defineStore('auth', {
   state: (): AuthState => ({
     user: null,
-    token: localStorage.getItem('token'),
+    token: null,
   }),
 
   getters: {
@@ -30,7 +30,8 @@ export const useAuthStore = defineStore('auth', {
         });
 
         if (!response.ok) {
-          throw new Error('Login failed');
+          const error = await response.json();
+          throw new Error(error.message || 'Login failed');
         }
 
         const data = await response.json();
@@ -39,18 +40,23 @@ export const useAuthStore = defineStore('auth', {
         return true;
       } catch (error) {
         console.error('Login error:', error);
-        return false;
+        this.clearAuth();
+        throw error;
       }
     },
 
     async logout() {
       try {
-        await fetch('/api/logout', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${this.token}`,
-          },
-        });
+        if (this.token) {
+          await fetch('/api/logout', {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }).then(() => {
+            this.clearAuth();
+          });
+        }
       } catch (error) {
         console.error('Logout error:', error);
       } finally {
@@ -60,6 +66,11 @@ export const useAuthStore = defineStore('auth', {
 
     async fetchUser() {
       try {
+        if (!this.token) {
+          this.clearAuth();
+          return false;
+        }
+
         const response = await fetch('/api/user', {
           headers: {
             Authorization: `Bearer ${this.token}`,
@@ -84,13 +95,12 @@ export const useAuthStore = defineStore('auth', {
     setAuth(user: User, token: string) {
       this.user = user;
       this.token = token;
-      localStorage.setItem('token', token);
     },
 
     clearAuth() {
       this.user = null;
       this.token = null;
-      localStorage.removeItem('token');
     },
   },
+  persist: true,
 });

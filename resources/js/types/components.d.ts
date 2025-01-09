@@ -7,7 +7,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    AdminLayout: typeof import('./../layouts/admin-layout.vue')['default']
+    AdminLayout: typeof import('./../layouts/AdminLayout.vue')['default']
     Alert: typeof import('./../components/ui/alert/Alert.vue')['default']
     AlertDescription: typeof import('./../components/ui/alert/AlertDescription.vue')['default']
     AlertTitle: typeof import('./../components/ui/alert/AlertTitle.vue')['default']
@@ -22,7 +22,7 @@ declare module 'vue' {
     CardFooter: typeof import('./../components/ui/card/CardFooter.vue')['default']
     CardHeader: typeof import('./../components/ui/card/CardHeader.vue')['default']
     CardTitle: typeof import('./../components/ui/card/CardTitle.vue')['default']
-    DefaultLayout: typeof import('./../layouts/default-layout.vue')['default']
+    DefaultLayout: typeof import('./../layouts/DefaultLayout.vue')['default']
     DefaultNavbar: typeof import('./../components/Default/DefaultNavbar.vue')['default']
     Input: typeof import('./../components/ui/input/Input.vue')['default']
     LoginForm: typeof import('./../components/Auth/LoginForm.vue')['default']

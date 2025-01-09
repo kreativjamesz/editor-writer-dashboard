@@ -1,45 +1,48 @@
 <template>
-  <nav class="bg-gray-800 p-4">
-    <ul class="navbar-nav flex flex-row items-center justify-between gap-4">
-      <li v-for="route in routes" :key="route.path" class="nav-item">
-        <router-link
-          class="nav-link text-white hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium"
-          active-class="bg-gray-900"
-          :to="route.path"
-        >
-          {{ route.name }}
-        </router-link>
-      </li>
-    </ul>
+  <nav class="flex items-center space-x-4 ml-8">
+    <router-link
+      v-for="item in navItems"
+      :key="item.to"
+      v-show="item.show"
+      :to="item.to"
+      class="text-gray-700 hover:text-blue-600 font-medium"
+    >
+      {{ item.label }}
+    </router-link>
   </nav>
 </template>
 
 <script setup lang="ts">
-interface Route {
-  path: string;
-  name: string;
-}
+import { useAuthStore } from '@/stores/auth';
 
-import { ref } from 'vue';
+const auth = useAuthStore();
 
-const routes = ref<Route[]>([
-  { path: '/dashboard', name: 'Dashboard' },
-  { path: '/dashboard/companies', name: 'Companies' },
-  { path: '/dashboard/articles', name: 'Articles' },
-  { path: '/dashboard/users', name: 'Users' },
-]);
+const navItems = [
+  {
+    label: 'Dashboard',
+    to: `${auth.user.type === 'Writer' ? '/dashboard/writer' : '/dashboard/editor'}`,
+    show: true,
+  },
+  {
+    label: 'Articles',
+    to: '/articles',
+    show: auth.isWriter,
+  },
+  {
+    label: 'Companies',
+    to: '/dashboard/companies',
+    show: auth.isEditor,
+  },
+  {
+    label: 'Users',
+    to: '/dashboard/users',
+    show: auth.isEditor,
+  },
+] as const;
 </script>
 
-<style scoped lang="postcss">
-.navbar-nav {
-  @apply flex flex-row items-center justify-between gap-4;
-}
-
-.nav-link {
-  @apply text-white hover:bg-gray-700 px-3 py-4 rounded-md text-sm font-medium;
-}
-
-.active {
-  @apply bg-gray-900;
+<style scoped>
+.router-link-active {
+  @apply text-blue-600;
 }
 </style>
