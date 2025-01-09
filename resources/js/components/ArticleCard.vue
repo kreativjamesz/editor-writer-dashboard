@@ -11,7 +11,7 @@ defineProps<{
     <img :src="article.image" :alt="article.title" class="w-full h-48 object-cover" />
     <div class="p-4">
       <h3 class="font-semibold text-lg mb-2">{{ article.title }}</h3>
-      <a :href="article.link" target="_blank" class="text-blue-600 hover:text-blue-800 text-sm mb-2 block">
+      <a :href="article.link" target="_blank" class="text-teal-600 hover:text-teal-800 text-sm mb-2 block">
         {{ article.link }}
       </a>
       <div class="text-sm text-gray-600">

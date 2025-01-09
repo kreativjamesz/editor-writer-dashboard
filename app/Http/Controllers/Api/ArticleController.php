@@ -23,7 +23,8 @@ class ArticleController extends Controller
 
 		// Filter by writer if user is a writer
 		if ($request->user()->type === 'Writer') {
-			$query->where('writer_id', $request->user()->id);
+			$query->where('writer_id', $request->user()->id)
+				->whereIn('status', ['For Edit', 'Published']);
 		}
 
 		return response()->json($query->latest()->get());
@@ -39,7 +40,7 @@ class ArticleController extends Controller
 			'image' => 'required|image|max:2048', // 2MB max
 			'title' => 'required|string|max:255',
 			'link' => 'required|url|max:255',
-			'date' => 'required|date',
+			'published_date' => 'required|date',
 			'content' => 'required|string',
 		]);
 
@@ -82,7 +83,7 @@ class ArticleController extends Controller
 			'image' => 'sometimes|image|max:2048',
 			'title' => 'sometimes|string|max:255',
 			'link' => 'sometimes|url|max:255',
-			'date' => 'sometimes|date',
+			'published_date' => 'sometimes|date',
 			'content' => 'sometimes|string',
 		]);
 

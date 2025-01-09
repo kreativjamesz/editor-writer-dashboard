@@ -14,16 +14,12 @@ class Article extends Model
 		'image',
 		'title',
 		'link',
-		'date',
+		'published_date',
 		'content',
 		'status',
 		'writer_id',
 		'editor_id',
 		'company_id',
-	];
-
-	protected $casts = [
-		'date' => 'date',
 	];
 
 	public function writer(): BelongsTo

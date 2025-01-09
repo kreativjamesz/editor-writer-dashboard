@@ -125,6 +125,7 @@ declare global {
   const useArraySome: typeof import('@vueuse/core')['useArraySome']
   const useArrayUnique: typeof import('@vueuse/core')['useArrayUnique']
   const useArticleStore: typeof import('../stores/article')['useArticleStore']
+  const useArticles: typeof import('../composables/useArticles')['useArticles']
   const useAsyncQueue: typeof import('@vueuse/core')['useAsyncQueue']
   const useAsyncState: typeof import('@vueuse/core')['useAsyncState']
   const useAttrs: typeof import('vue')['useAttrs']
@@ -432,6 +433,7 @@ declare module 'vue' {
     readonly useArraySome: UnwrapRef<typeof import('@vueuse/core')['useArraySome']>
     readonly useArrayUnique: UnwrapRef<typeof import('@vueuse/core')['useArrayUnique']>
     readonly useArticleStore: UnwrapRef<typeof import('../stores/article')['useArticleStore']>
+    readonly useArticles: UnwrapRef<typeof import('../composables/useArticles')['useArticles']>
     readonly useAsyncQueue: UnwrapRef<typeof import('@vueuse/core')['useAsyncQueue']>
     readonly useAsyncState: UnwrapRef<typeof import('@vueuse/core')['useAsyncState']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>

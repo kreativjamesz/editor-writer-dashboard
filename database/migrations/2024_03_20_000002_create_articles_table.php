@@ -12,7 +12,7 @@ return new class extends Migration {
 			$table->string('image');
 			$table->string('title');
 			$table->string('link');
-			$table->date('date');
+			$table->date('published_date')->nullable();
 			$table->text('content');
 			$table->enum('status', ['For Edit', 'Published']);
 			$table->foreignId('writer_id')->constrained('users');

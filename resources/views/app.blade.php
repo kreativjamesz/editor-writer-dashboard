@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>@yield('title')</title>
+        <title>Skill Test</title>
         @vite([ 'resources/js/app.ts','resources/css/app.css'])
 			</head>
     <body>

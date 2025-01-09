@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,15 +17,22 @@ class ArticleFactory extends Factory
 	 */
 	public function definition(): array
 	{
+		$status = $this->faker->randomElement(['For Edit', 'Published']);
+		$editorId = $status === 'Published' ? User::where('type', 'Editor')->inRandomOrder()->first()->id : null;
+		$publishedDate = $status === 'Published' ? $this->faker->date() : null;
+
+		// Find a user who is a writer
+		$writerId = User::where('type', 'Writer')->inRandomOrder()->first()->id;
+
 		return [
 			'image' => $this->faker->imageUrl(),
 			'title' => $this->faker->sentence(),
 			'link' => $this->faker->url(),
-			'date' => $this->faker->date(),
+			'published_date' => $publishedDate,
 			'content' => $this->faker->paragraph(),
-			'status' => $this->faker->randomElement(['For Edit', 'Published']),
-			'writer_id' => \App\Models\User::factory(),
-			'editor_id' => \App\Models\User::factory(),
+			'status' => $status,
+			'writer_id' => $writerId,
+			'editor_id' => $editorId,
 			'company_id' => \App\Models\Company::factory(),
 		];
 	}

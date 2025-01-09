@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
 			'firstname' => 'John',
 			'lastname' => 'Editor',
 			'email' => 'editor@example.com',
-			'password' => Hash::make('password'),
+			'password' => Hash::make('123123123'),
 			'type' => 'Editor',
 			'status' => 'Active',
 		]);
@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
 			'firstname' => 'Jane',
 			'lastname' => 'Writer',
 			'email' => 'writer@example.com',
-			'password' => Hash::make('password'),
+			'password' => Hash::make('123123123'),
 			'type' => 'Writer',
 			'status' => 'Active',
 		]);
@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
 			'firstname' => 'Alice',
 			'lastname' => 'Editor',
 			'email' => 'alice@example.com',
-			'password' => Hash::make('password'),
+			'password' => Hash::make('123123123'),
 			'type' => 'Editor',
 			'status' => 'Active',
 		]);
@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
 			'firstname' => 'Bob',
 			'lastname' => 'Writer',
 			'email' => 'bob@example.com',
-			'password' => Hash::make('password'),
+			'password' => Hash::make('123123123'),
 			'type' => 'Writer',
 			'status' => 'Active',
 		]);
@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
 			'firstname' => 'Inactive',
 			'lastname' => 'User',
 			'email' => 'inactive@example.com',
-			'password' => Hash::make('password'),
+			'password' => Hash::make('123123123'),
 			'type' => 'Writer',
 			'status' => 'Inactive',
 		]);

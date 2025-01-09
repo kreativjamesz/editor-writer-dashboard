@@ -48,6 +48,6 @@ const navItems = [
 
 <style scoped>
 .router-link-active {
-  @apply text-blue-600;
+  @apply text-teal-600;
 }
 </style>

@@ -21,9 +21,9 @@
         <div class="flex items-center space-x-4">
           <!-- User Menu -->
           <div class="relative" v-if="auth.user">
-            <button class="flex items-center gap-2 text-gray-700 hover:text-blue-600">
+            <button class="flex items-center gap-2 text-gray-700 hover:text-teal-600 dark:text-zinc-200">
               <span class="font-medium">{{ userName }}</span>
-              <span v-if="userType" class="text-xs px-2 py-1 bg-gray-100 rounded-full">
+              <span v-if="userType" class="text-xs px-2 py-1 bg-gray-800 rounded-full">
                 {{ userType }}
               </span>
             </button>
@@ -32,7 +32,7 @@
           <Button
             @click="handleLogout"
             :disabled="isLoggingOut"
-            class="text-red-600 hover:text-red-800 font-medium disabled:opacity-50"
+            class="dark:bg-teal-800 dark:hover:bg-zinc-700 dark:text-zinc-200 disabled:opacity-50"
           >
             {{ isLoggingOut ? 'Logging out...' : 'Logout' }}
           </Button>
