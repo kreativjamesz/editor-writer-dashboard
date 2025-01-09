@@ -4,35 +4,32 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Article;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ArticleResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
-	/**
-	 * Display a listing of the resource.
-	 */
 	public function index(Request $request)
 	{
 		$query = Article::with(['writer', 'editor', 'company']);
 
-		// Filter by status if provided
 		if ($request->has('status')) {
 			$query->where('status', $request->status);
 		}
 
-		// Filter by writer if user is a writer
 		if ($request->user()->type === 'Writer') {
 			$query->where('writer_id', $request->user()->id)
 				->whereIn('status', ['For Edit', 'Published']);
 		}
 
-		return response()->json($query->latest()->get());
+		$articles = $query->latest()->paginate(
+			$request->input('per_page', 10)
+		);
+
+		return ArticleResource::collection($articles);
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 */
 	public function store(Request $request)
 	{
 		$validated = $request->validate([
@@ -57,17 +54,11 @@ class ArticleController extends Controller
 		return response()->json($article->load(['writer', 'company']));
 	}
 
-	/**
-	 * Display the specified resource.
-	 */
 	public function show(Article $article)
 	{
 		return response()->json($article->load(['writer', 'editor', 'company']));
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 */
 	public function update(Request $request, Article $article)
 	{
 		// Check if user can edit the article
@@ -104,9 +95,6 @@ class ArticleController extends Controller
 		return response()->json($article->load(['writer', 'editor', 'company']));
 	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 */
 	public function destroy(Article $article)
 	{
 		// Only editors can delete articles
