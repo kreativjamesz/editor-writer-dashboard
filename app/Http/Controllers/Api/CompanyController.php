@@ -8,14 +8,21 @@ use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
-	public function __construct()
+	public function __construct() {}
+
+	public function list()
 	{
-		$this->middleware('can:manage-companies');
+		$companies = Company::where('status', 'Active')
+			->select('id', 'name')
+			->orderBy('name')
+			->get();
+
+		return response()->json($companies);
 	}
 
 	public function index()
 	{
-		return response()->json(Company::all());
+		return response()->json(Company::paginate(10)->get());
 	}
 
 	public function store(Request $request)

@@ -3,7 +3,10 @@
     <h1 class="text-6xl font-bold mb-4">{{ userRole }}'s Articles</h1>
     <Separator label="✍️" class="mb-8 bg-teal-500" />
     <section class="mb-8">
-      <h2 class="text-3xl font-extrabold mb-2">Articles For Edit</h2>
+      <div class="flex items-center justify-between">
+        <h2 class="text-3xl font-extrabold mb-2">Articles For Edit</h2>
+        <Button @click="createArticle" class="dark:bg-teal-800 dark:text-zinc-200 ml-4">Create</Button>
+      </div>
       <div v-if="articlesForEdit.length === 0" class="text-zinc-500">No articles for edit.</div>
       <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <ArticleCard
@@ -59,6 +62,11 @@ const error = ref(null);
 
 const authStore = useAuthStore();
 const userRole = computed(() => authStore.user?.type || 'Guest');
+const router = useRouter();
+
+const createArticle = () => {
+  router.push('/cms/articles/create');
+};
 
 const loadArticles = async (status: string, page: number) => {
   loading.value = true;
