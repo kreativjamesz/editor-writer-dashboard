@@ -3,7 +3,6 @@
     <router-link
       v-for="item in navItems"
       :key="item.to"
-      v-show="item.show"
       :to="item.to"
       class="text-gray-700 dark:text-gray-300 hover:text-teal-600 font-medium"
     >
@@ -15,33 +14,35 @@
 <script setup lang="ts">
 import { useRoleAccess } from '@/composables/useRoleAccess';
 
+console.log('useRoleAccess', useRoleAccess());
+
 const { isWriter, isEditor } = useRoleAccess();
 
 const navItems = [
   {
     label: 'Dashboard',
     to: '/cms/dashboard',
-    show: true,
+    // show: [isWriter, isEditor],
   },
   {
     label: 'Articles',
     to: '/cms/articles',
-    show: true,
+    // show: [isWriter, isEditor],
   },
   {
     label: 'Companies',
     to: '/cms/companies',
-    show: isEditor,
+    // show: [isEditor, isWriter],
   },
   {
     label: 'Users',
     to: '/cms/users',
-    show: isEditor,
+    // show: [isEditor],
   },
   {
     label: 'Media',
     to: '/cms/media',
-    show: true,
+    // show: [isEditor],
   },
 ] as const;
 </script>

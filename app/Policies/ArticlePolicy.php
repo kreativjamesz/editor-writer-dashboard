@@ -19,10 +19,10 @@ class ArticlePolicy
 		return in_array($user->type, ['Writer', 'Editor']);
 	}
 
-	// Create article (Writer only)
+	// Create article (Writer and Editor)
 	public function create(User $user): bool
 	{
-		return $user->type === ['Writer', 'Editor'];
+		return in_array($user->type, ['Writer', 'Editor']);
 	}
 
 	// Edit article

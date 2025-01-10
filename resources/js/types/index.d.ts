@@ -15,6 +15,13 @@ export interface Company {
   status: 'Active' | 'Inactive';
 }
 
+export interface CompanyCombobox {
+  id: number;
+  name: string;
+  label: string;
+  value: string;
+}
+
 export interface Article {
   id: number;
   title: string;

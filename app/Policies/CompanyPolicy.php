@@ -10,6 +10,11 @@ class CompanyPolicy
 	// List companies (both Writer and Editor)
 	public function retrieveCompanies(User $user): bool
 	{
+		\Log::info('CompanyPolicy@retrieveCompanies', [
+			'user_type' => $user->type,
+			'user_id' => $user->id
+		]);
+
 		return in_array($user->type, ['Writer', 'Editor']);
 	}
 

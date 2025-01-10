@@ -8,23 +8,34 @@ use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
-	public function __construct() {}
-
-	public function list()
+	public function __construct()
 	{
+		// No middleware here - we'll use policy middleware in routes
+	}
+
+	// Retrieve companies (both Writer and Editor)
+	public function index()
+	{
+		\Log::info('CompanyController@index accessed', [
+			'user' => auth()->user(),
+			'can_retrieve_companies' => auth()->user()->can('retrieve-companies')
+		]);
+
 		$companies = Company::where('status', 'Active')
 			->select('id', 'name')
 			->orderBy('name')
-			->get();
+			->paginate(10);
 
 		return response()->json($companies);
 	}
 
-	public function index()
+	// View specific company (both Writer and Editor)
+	public function show(Company $company)
 	{
-		return response()->json(Company::paginate(10)->get());
+		return response()->json($company);
 	}
 
+	// Create company (Editor only)
 	public function store(Request $request)
 	{
 		$validated = $request->validate([
@@ -34,14 +45,10 @@ class CompanyController extends Controller
 		]);
 
 		$company = Company::create($validated);
-		return response()->json($company);
+		return response()->json($company, 201);
 	}
 
-	public function show(Company $company)
-	{
-		return response()->json($company);
-	}
-
+	// Update company (Editor only)
 	public function update(Request $request, Company $company)
 	{
 		$validated = $request->validate([
@@ -54,6 +61,7 @@ class CompanyController extends Controller
 		return response()->json($company);
 	}
 
+	// Delete company (Editor only)
 	public function destroy(Company $company)
 	{
 		// Check if company has any articles

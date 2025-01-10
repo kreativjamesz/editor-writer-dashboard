@@ -23,6 +23,7 @@
                 {{ company.name }}
               </option>
             </Select> -->
+            <CompanyDropdown :companies="companies" v-model="form.company_id" required />
           </div>
 
           <!-- Title -->
@@ -94,12 +95,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useApi } from '@/composables/useApi';
-import { useAuthStore } from '@/stores/auth';
 import { useCompanyStore } from '@/stores/company';
 
 const api = useApi();
-const auth = useAuthStore();
-const { fetchAllCompanies } = useCompanyStore();
+const { companies, fetchAllCompanies } = useCompanyStore();
 const router = useRouter();
 
 const form = ref({

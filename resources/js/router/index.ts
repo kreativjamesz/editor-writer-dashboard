@@ -12,6 +12,7 @@ router.beforeEach(async (to) => {
   const authStore = useAuthStore();
   const publicPages = ['/login'];
   const authRequired = to.path.startsWith('/cms');
+  const userRole = authStore.user?.type;
 
   // Check authentication status
   if (authStore.token && !authStore.user) {

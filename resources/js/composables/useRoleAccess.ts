@@ -14,7 +14,36 @@ export function useRoleAccess() {
     });
   };
 
+  const writerAccessOnly = () => {
+    return computed(() => {
+      if (!auth.user) return false;
+      return isWriter.value;
+    });
+  };
+
+  const editorAccessOnly = () => {
+    return computed(() => {
+      if (!auth.user) return false;
+      return isEditor.value;
+    });
+  };
+
+  const canCreateArticle = (roles: ('Writer' | 'Editor')[]) => {
+    return computed(() => {
+      if (!auth.user) return false;
+      return roles.includes(auth.user.type);
+    });
+  };
+
   const canEditArticle = (articleStatus: 'For Edit' | 'Published') => {
+    return computed(() => {
+      if (!auth.user) return false;
+      if (isEditor.value) return true;
+      return isWriter.value && articleStatus === 'For Edit';
+    });
+  };
+
+  const canDeleteArticle = (articleStatus: 'For Edit' | 'Published') => {
     return computed(() => {
       if (!auth.user) return false;
       if (isEditor.value) return true;
@@ -26,6 +55,8 @@ export function useRoleAccess() {
     isWriter,
     isEditor,
     canAccess,
+    canCreateArticle,
     canEditArticle,
+    canDeleteArticle,
   };
 }

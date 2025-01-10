@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
+	public function __construct()
+	{
+		// No middleware here - we'll use policy middleware in routes
+	}
+
+	// Retrieve articles (both Writer and Editor)
 	public function index(Request $request)
 	{
 		$query = Article::with(['writer', 'editor', 'company']);
@@ -18,9 +24,9 @@ class ArticleController extends Controller
 			$query->where('status', $request->status);
 		}
 
+		// Writers can only see their own articles
 		if ($request->user()->type === 'Writer') {
-			$query->where('writer_id', $request->user()->id)
-				->whereIn('status', ['For Edit', 'Published']);
+			$query->where('writer_id', $request->user()->id);
 		}
 
 		$articles = $query->latest()->paginate(
@@ -30,12 +36,19 @@ class ArticleController extends Controller
 		return ArticleResource::collection($articles);
 	}
 
+	// View specific article (both Writer and Editor)
+	public function show(Article $article)
+	{
+		return new ArticleResource($article->load(['writer', 'editor', 'company']));
+	}
+
+	// Create article (Writer and Editor)
 	public function store(Request $request)
 	{
 		$validated = $request->validate([
 			'company_id' => 'required|exists:companies,id',
-			'image' => 'required|image|max:2048', // 2MB max
 			'title' => 'required|string|max:255',
+			'image' => 'required|image|max:2048',
 			'link' => 'required|url|max:255',
 			'published_date' => 'required|date',
 			'content' => 'required|string',
@@ -43,63 +56,54 @@ class ArticleController extends Controller
 
 		// Handle image upload
 		$path = $request->file('image')->store('articles', 'public');
+		$validated['image'] = Storage::url($path);
 
-		$article = Article::create([
-			...$validated,
-			'image' => Storage::url($path),
-			'writer_id' => $request->user()->id,
-			'status' => 'For Edit',
-		]);
+		// Set default values
+		$validated['writer_id'] = $request->user()->id;
+		$validated['status'] = 'For Edit';
 
-		return response()->json($article->load(['writer', 'company']));
+		$article = Article::create($validated);
+		return new ArticleResource($article->load(['writer', 'editor', 'company']));
 	}
 
-	public function show(Article $article)
-	{
-		return response()->json($article->load(['writer', 'editor', 'company']));
-	}
-
+	// Update article (Writer: own unpublished, Editor: all)
 	public function update(Request $request, Article $article)
 	{
-		// Check if user can edit the article
-		if (
-			$request->user()->type === 'Writer' &&
-			($article->status !== 'For Edit' || $article->writer_id !== $request->user()->id)
-		) {
-			return response()->json(['message' => 'Unauthorized'], 403);
-		}
-
 		$validated = $request->validate([
 			'company_id' => 'sometimes|exists:companies,id',
-			'image' => 'sometimes|image|max:2048',
 			'title' => 'sometimes|string|max:255',
+			'image' => 'sometimes|image|max:2048',
 			'link' => 'sometimes|url|max:255',
 			'published_date' => 'sometimes|date',
 			'content' => 'sometimes|string',
 		]);
 
-		// Handle image upload if new image is provided
 		if ($request->hasFile('image')) {
+			// Delete old image
+			if ($article->image) {
+				Storage::delete(str_replace('/storage/', 'public/', $article->image));
+			}
+			// Store new image
 			$path = $request->file('image')->store('articles', 'public');
 			$validated['image'] = Storage::url($path);
 		}
 
-		// Handle publish action for editors
+		// Handle publishing (Editor only)
 		if ($request->user()->type === 'Editor' && $request->input('publish')) {
 			$validated['status'] = 'Published';
 			$validated['editor_id'] = $request->user()->id;
 		}
 
 		$article->update($validated);
-
-		return response()->json($article->load(['writer', 'editor', 'company']));
+		return new ArticleResource($article->load(['writer', 'editor', 'company']));
 	}
 
+	// Delete article (Editor only)
 	public function destroy(Article $article)
 	{
-		// Only editors can delete articles
-		if (auth()->user()->type !== 'Editor') {
-			return response()->json(['message' => 'Unauthorized'], 403);
+		// Delete article image if exists
+		if ($article->image) {
+			Storage::delete(str_replace('/storage/', 'public/', $article->image));
 		}
 
 		$article->delete();
