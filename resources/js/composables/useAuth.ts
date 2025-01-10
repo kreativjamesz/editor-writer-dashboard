@@ -19,7 +19,7 @@ export function useAuth() {
       console.log('Composable Login');
       authStore.setAuth(response.user, response.token);
 
-      // Redirect to CMS dashboard
+      // Redirect to User role's dashboard
       router.push(`/${userRole.value.toLowerCase()}/dashboard`);
 
       return true;

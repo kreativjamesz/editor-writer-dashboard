@@ -48,7 +48,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useArticles } from '@/composables/useArticles';
-import { useAuthStore } from '@/stores/auth'; // Adjust the path as necessary
+import { useAuth } from '@/composables/useAuth';
 
 const { fetchArticles } = useArticles();
 const articlesForEdit = ref([]);
@@ -60,12 +60,11 @@ const hasMorePublished = ref(true);
 const loading = ref(true);
 const error = ref(null);
 
-const authStore = useAuthStore();
-const userRole = computed(() => authStore.user?.type || 'Guest');
 const router = useRouter();
+const { userRole } = useAuth();
 
 const createArticle = () => {
-  router.push('/cms/articles/create');
+  router.push(`/${userRole.value.toLowerCase()}/articles/create`);
 };
 
 const loadArticles = async (status: string, page: number) => {

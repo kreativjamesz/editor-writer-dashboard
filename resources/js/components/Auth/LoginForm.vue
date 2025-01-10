@@ -1,13 +1,13 @@
 <template>
   <div class="login-form">
     <Card class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-      <CardHeader class="sm:mx-auto sm:w-full sm:max-w-sm">
+      <CardHeader class="sm:mx-auto sm:w-full sm:max-w-sm pt-10">
         <h2 class="text-center text-2xl/9 font-bold tracking-tight text-gray-900 dark:text-white">
           Sign in to your account
         </h2>
       </CardHeader>
 
-      <CardContent class="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+      <CardContent class="mt-5 sm:mx-auto sm:w-full sm:max-w-sm pb-10">
         <form class="space-y-4" @submit="handleSubmit">
           <!-- Error Alert -->
           <Alert v-if="error" class="bg-red-50 text-red-600 p-3 text-sm">
@@ -57,7 +57,7 @@
             <Button
               type="submit"
               :disabled="loading"
-              class="flex w-full justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50"
+              class="flex w-full justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50 dark:bg-teal-600 dark:hover:bg-teal-700 dark:text-zinc-200"
             >
               {{ loading ? 'Signing in...' : 'Sign in' }}
             </Button>
