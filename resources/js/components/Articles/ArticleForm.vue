@@ -96,10 +96,12 @@
 import { ref } from 'vue';
 import { useApi } from '@/composables/useApi';
 import { useCompanyStore } from '@/stores/company';
+import { useAuth } from '@/composables/useAuth';
 
 const api = useApi();
 const { companies, fetchAllCompanies } = useCompanyStore();
 const router = useRouter();
+const { userRole } = useAuth();
 
 const form = ref({
   company_id: '',
@@ -142,7 +144,7 @@ const handleSubmit = async () => {
       },
     });
 
-    router.push('/cms/articles');
+    router.push(`/${userRole.value.toLowerCase()}/articles`);
   } catch (e) {
     error.value = e instanceof Error ? e.message : 'Failed to create article';
   } finally {

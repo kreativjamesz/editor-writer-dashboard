@@ -8,10 +8,10 @@ const router = createRouter({
 });
 
 // Navigation Guard
-router.beforeEach(async (to) => {
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
   const publicPages = ['/login'];
-  const authRequired = to.path.startsWith('/cms');
+  const authRequired = !publicPages.includes(to.path);
   const userRole = authStore.user?.type;
 
   // Check authentication status
@@ -20,38 +20,31 @@ router.beforeEach(async (to) => {
       await authStore.fetchUser();
     } catch {
       authStore.clearAuth();
-      return '/login';
+      return next('/login');
     }
   }
 
+  // Redirect to login if not authenticated
   if (authRequired && !authStore.isAuthenticated) {
-    return '/login';
+    return next('/login');
   }
 
-  // Redirect from login if already authenticated
+  // Redirect from login into designated dashboard if already authenticated
   if (to.path === '/login' && authStore.isAuthenticated) {
-    return '/cms/dashboard';
+    return next(`/${userRole.toLowerCase()}/dashboard`);
   }
 
   // Role-based route protection
-  if (authStore.isAuthenticated && to.path.startsWith('/cms/')) {
-    const userRole = authStore.user?.type;
-
-    // Protect editor-only routes
-    if (userRole === 'Writer') {
-      // Block access to companies and users management
-      if (to.path.startsWith('/cms/companies') || to.path.startsWith('/cms/users')) {
-        return '/cms/dashboard';
-      }
-
-      // Block access to published article editing
-      if (to.path.startsWith('/cms/articles/edit/:id')) {
-        // const articleId = to.params.id;
-        // You might want to check article status here
-        // and redirect if it's published
-      }
+  if (authStore.isAuthenticated) {
+    if (userRole === 'Writer' && to.path.startsWith('/editor')) {
+      return next(from.path !== '/writer/dashboard' ? '/writer/dashboard' : '/');
+    }
+    if (userRole === 'Editor' && to.path.startsWith('/writer')) {
+      return next(from.path !== '/editor/dashboard' ? '/editor/dashboard' : '/');
     }
   }
+
+  next();
 });
 
 export default router;

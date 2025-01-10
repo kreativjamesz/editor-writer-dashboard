@@ -20,7 +20,7 @@ export function useAuth() {
       authStore.setAuth(response.user, response.token);
 
       // Redirect to CMS dashboard
-      router.push('/cms/dashboard');
+      router.push(`/${userRole.value.toLowerCase()}/dashboard`);
 
       return true;
     } catch (e) {
@@ -59,6 +59,9 @@ export function useAuth() {
     }
   };
 
+  // Computed property to determine a user role
+  const userRole = computed(() => authStore.user?.type || 'Guest');
+
   return {
     login,
     logout,
@@ -67,5 +70,6 @@ export function useAuth() {
     error,
     isAuthenticated: authStore.isAuthenticated,
     user: authStore.user,
+    userRole,
   };
 }

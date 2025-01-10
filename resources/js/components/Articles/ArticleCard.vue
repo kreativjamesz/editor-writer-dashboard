@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Article } from '@/types';
 import { useDateFormatter } from '@/composables/useDateFormatter';
+import { useAuth } from '@/composables/useAuth';
 
 defineProps<{
   article: Article;
@@ -8,6 +9,7 @@ defineProps<{
 }>();
 
 const { longFormat } = useDateFormatter();
+const { userRole } = useAuth();
 </script>
 
 <template>
@@ -30,7 +32,7 @@ const { longFormat } = useDateFormatter();
             <a :href="article.link" class="text-teal-500 hover:underline">
               <Button variant="link" class="dark:text-zinc-200 p-1">Read more</Button>
             </a>
-            <RouterLink :to="`/cms/articles/edit/${article.id}`">
+            <RouterLink :to="`/${userRole.toLowerCase()}/articles/edit/${article.id}`">
               <Button class="dark:bg-teal-800 dark:hover:bg-zinc-700 dark:text-zinc-200">Edit</Button>
             </RouterLink>
           </div>

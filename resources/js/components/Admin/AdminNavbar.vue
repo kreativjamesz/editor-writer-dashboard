@@ -4,7 +4,7 @@
       <!-- Top Navigation Bar -->
       <div class="flex justify-between items-center h-16">
         <!-- Left Side: Logo and Brand -->
-        <div class="flex items-center gap-4">
+        <div class="flex items-center justify-start gap-4 w-1/3">
           <router-link to="/">
             <img
               width="80"
@@ -14,11 +14,15 @@
               alt="ArchIntel™"
             />
           </router-link>
+        </div>
+
+        <!-- Middle: Main Nav -->
+        <div class="flex items-center justify-center space-x-4 w-1/3">
           <MainNav />
         </div>
 
         <!-- Right Side: User Navigation -->
-        <div class="flex items-center space-x-4">
+        <div class="flex items-center justify-end space-x-4 w-1/3">
           <!-- User Menu -->
           <div class="relative" v-if="auth.user">
             <button class="flex items-center gap-2 text-gray-700 hover:text-teal-600 dark:text-zinc-200">

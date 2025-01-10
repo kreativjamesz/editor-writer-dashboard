@@ -14,37 +14,24 @@
 <script setup lang="ts">
 import { useRoleAccess } from '@/composables/useRoleAccess';
 
-console.log('useRoleAccess', useRoleAccess());
-
 const { isWriter, isEditor } = useRoleAccess();
 
-const navItems = [
-  {
-    label: 'Dashboard',
-    to: '/cms/dashboard',
-    // show: [isWriter, isEditor],
-  },
-  {
-    label: 'Articles',
-    to: '/cms/articles',
-    // show: [isWriter, isEditor],
-  },
-  {
-    label: 'Companies',
-    to: '/cms/companies',
-    // show: [isEditor, isWriter],
-  },
-  {
-    label: 'Users',
-    to: '/cms/users',
-    // show: [isEditor],
-  },
-  {
-    label: 'Media',
-    to: '/cms/media',
-    // show: [isEditor],
-  },
-] as const;
+const navItems = computed(() => {
+  if (isWriter.value) {
+    return [
+      { label: 'Dashboard', to: '/writer/dashboard', show: true },
+      { label: 'All Media', to: '/writer/media', show: true },
+    ];
+  } else if (isEditor.value) {
+    return [
+      { label: 'Dashboard', to: '/editor/dashboard', show: true },
+      { label: 'Companies', to: '/editor/companies', show: true },
+      { label: 'Users', to: '/editor/users', show: true },
+      { label: 'All Media', to: '/editor/media', show: true },
+    ];
+  }
+  return [];
+});
 </script>
 
 <style scoped>
