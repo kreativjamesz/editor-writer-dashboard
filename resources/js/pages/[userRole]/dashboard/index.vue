@@ -1,21 +1,20 @@
 <template>
   <div class="dashboard-page">
-    <h1 class="text-6xl font-bold mb-4">{{ userRole }}'s Articles</h1>
+    <h1 class="text-6xl font-bold mb-4">{{ userRole }}'s Dashboard</h1>
     <Separator label="✍️" class="mb-8 bg-teal-500" />
     <section class="mb-8">
       <div class="flex items-center justify-between">
-        <h2 class="text-3xl font-extrabold mb-2">Articles For Edit</h2>
+        <h2 class="text-4xl font-extrabold mb-2">#Articles For Edit</h2>
         <Button @click="createArticle" class="dark:bg-teal-800 dark:text-zinc-200 ml-4">Create</Button>
       </div>
       <div v-if="articlesForEdit.length === 0" class="text-zinc-500">No articles for edit.</div>
       <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <ArticleCard
           v-for="(article, index) in articlesForEdit"
-          v-motion-fade-in-up
           :key="article.id"
           :article="article"
-          :delay="index * 50"
           :isForEdit="true"
+          :index="index"
           class="bg-white dark:bg-zinc-800 shadow-md rounded-lg overflow-hidden flex flex-col justify-between transition-all hover:shadow-md hover:scale-105 cursor-pointer"
         />
       </div>
@@ -25,16 +24,15 @@
     </section>
 
     <section>
-      <h2 class="text-3xl font-extrabold mb-2">#Published Articles</h2>
+      <h2 class="text-4xl font-extrabold mb-2">#Published Articles</h2>
       <div v-if="publishedArticles.length === 0" class="text-zinc-500">No published articles.</div>
       <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <ArticleCard
-          v-for="(article, index) in publishedArticles"
+          v-for="(article, idx) in publishedArticles"
           :key="article.id"
           :article="article"
-          v-motion-fade-in-up
-          :delay="index * 50"
           :isForEdit="false"
+          :index="idx"
           class="bg-white dark:bg-zinc-800 shadow-md rounded-lg overflow-hidden flex flex-col justify-between transition-all hover:shadow-md hover:scale-105 cursor-pointer"
         />
       </div>

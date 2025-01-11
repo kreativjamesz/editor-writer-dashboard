@@ -16,11 +16,6 @@ class CompanyController extends Controller
 	// Retrieve companies (both Writer and Editor)
 	public function index()
 	{
-		\Log::info('CompanyController@index accessed', [
-			'user' => auth()->user(),
-			'can_retrieve_companies' => auth()->user()->can('retrieve-companies')
-		]);
-
 		$companies = Company::where('status', 'Active')
 			->select('id', 'name')
 			->orderBy('name')

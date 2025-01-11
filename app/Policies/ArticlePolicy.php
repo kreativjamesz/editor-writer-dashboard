@@ -4,12 +4,14 @@ namespace App\Policies;
 
 use App\Models\User;
 use App\Models\Article;
+use Illuminate\Support\Facades\Log;
 
 class ArticlePolicy
 {
 	// List articles
 	public function retrieveArticles(User $user): bool
 	{
+		Log::info('ArticlePolicy@retrieveArticles', User::all()->toArray());
 		return in_array($user->type, ['Writer', 'Editor']);
 	}
 

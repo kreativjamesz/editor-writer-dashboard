@@ -6,6 +6,7 @@ import { useAuth } from '@/composables/useAuth';
 defineProps<{
   article: Article;
   isForEdit: boolean;
+  index: number;
 }>();
 
 const { longFormat } = useDateFormatter();
@@ -16,6 +17,8 @@ const { userRole } = useAuth();
   <HoverCard>
     <HoverCardTrigger>
       <Card
+        v-motion-fade-in-up
+        :delay="index * 50"
         class="bg-white dark:bg-zinc-800 shadow-md rounded-lg overflow-hidden flex flex-col justify-between transition-all hover:shadow-md hover:scale-105 cursor-pointer min-h-[160px]"
       >
         <CardHeader>

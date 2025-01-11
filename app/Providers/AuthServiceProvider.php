@@ -10,6 +10,7 @@ use App\Models\Article;
 use App\Policies\UserPolicy;
 use App\Policies\CompanyPolicy;
 use App\Policies\ArticlePolicy;
+use Illuminate\Support\Facades\Log;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -21,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
 
 	public function boot(): void
 	{
+		Log::info('AuthServiceProvider@boot');
 		// Company permissions
 		Gate::define('retrieve-companies', [CompanyPolicy::class, 'retrieveCompanies']);
 		Gate::define('view-company', [CompanyPolicy::class, 'view']);

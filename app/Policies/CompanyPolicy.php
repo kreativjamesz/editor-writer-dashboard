@@ -4,13 +4,14 @@ namespace App\Policies;
 
 use App\Models\User;
 use App\Models\Company;
+use Illuminate\Support\Facades\Log;
 
 class CompanyPolicy
 {
 	// List companies (both Writer and Editor)
 	public function retrieveCompanies(User $user): bool
 	{
-		\Log::info('CompanyPolicy@retrieveCompanies', [
+		Log::info('CompanyPolicy@retrieveCompanies', [
 			'user_type' => $user->type,
 			'user_id' => $user->id
 		]);

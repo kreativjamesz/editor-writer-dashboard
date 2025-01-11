@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -17,13 +17,13 @@ class AuthController extends Controller
 			'password' => ['required'],
 		]);
 
-		if (!Auth::attempt($credentials)) {
+		$user = User::where('email', $credentials['email'])->first();
+
+		if (!$user || !Hash::check($credentials['password'], $user->password)) {
 			throw ValidationException::withMessages([
 				'email' => ['The provided credentials are incorrect.'],
 			]);
 		}
-
-		$user = User::where('email', $request->email)->first();
 
 		if ($user->status !== 'Active') {
 			throw ValidationException::withMessages([
@@ -31,8 +31,11 @@ class AuthController extends Controller
 			]);
 		}
 
+		// Create a token for the user
+		$token = $user->createToken('auth-token')->plainTextToken;
+
 		return response()->json([
-			'token' => $user->createToken('auth-token')->plainTextToken,
+			'token' => $token,
 			'user' => $user,
 		]);
 	}
